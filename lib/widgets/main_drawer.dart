@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meal/main.dart';
+
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key, required this.onSelectScreen});
@@ -20,7 +20,7 @@ class MainDrawer extends StatelessWidget {
                   Theme.of(context)
                       .colorScheme
                       .primaryContainer
-                      .withOpacity(0.8),
+                      .withAlpha((0.8 * 255).toInt()),
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -48,12 +48,12 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(
               Icons.restaurant,
               size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Meal',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 24,
                   ),
             ),
@@ -65,12 +65,12 @@ class MainDrawer extends StatelessWidget {
             leading: Icon(
               Icons.settings,
               size: 26,
-              color: Theme.of(context).colorScheme.onBackground,
+              color: Theme.of(context).colorScheme.onSurface,
             ),
             title: Text(
               'Filters',
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                    color: Theme.of(context).colorScheme.onBackground,
+                    color: Theme.of(context).colorScheme.onSurface,
                     fontSize: 24,
                   ),
             ),
