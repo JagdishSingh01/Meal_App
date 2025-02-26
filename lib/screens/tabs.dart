@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:meal/provider/meals_provider.dart';
-import 'package:meal/models/meal.dart';
 import 'package:meal/screens/categories.dart';
 import 'package:meal/screens/filters.dart';
 import 'package:meal/screens/meals.dart';
 import 'package:meal/widgets/main_drawer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal/provider/favorites_provider.dart';
 
 const kInitialFilters = {
   Filter.glutenFree: false,
@@ -23,29 +23,7 @@ class TabsScreen extends ConsumerStatefulWidget {
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int _selectedPageIndex = 0;
-  final List<Meal> _favouriteMeals = [];
   Map<Filter, bool> _selectedFilters = kInitialFilters;
-
-  void _showInfoMessage(String message) {
-    ScaffoldMessenger.of(context).clearSnackBars();
-    ScaffoldMessenger.of(context)
-        .showSnackBar(SnackBar(content: Text(message)));
-  }
-
-  void _toggleMealFavouriteStatus(Meal meal) {
-    final isExisting = _favouriteMeals.contains(meal);
-    if (isExisting) {
-      setState(() {
-        _favouriteMeals.remove(meal);
-      });
-      _showInfoMessage('Meal is no longer a favourite');
-    } else {
-      setState(() {
-        _favouriteMeals.add(meal);
-      });
-      _showInfoMessage('Marked as a favourite');
-    }
-  }
 
   void _selectPage(int index) {
     setState(() {
@@ -86,15 +64,15 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     }).toList();
 
     Widget activePage = CategoriesScreen(
-      onToggleFavourite: _toggleMealFavouriteStatus,
       availableMeals: availableMeals,
     );
     var activePageTitle = 'Categories';
 
     if (_selectedPageIndex == 1) {
+      final favoriteMeals = ref.watch(favoriteMealsProvider);                                                             
       activePage = MealsScreen(
-          meals: _favouriteMeals,
-          onToggleFavourite: _toggleMealFavouriteStatus);
+          meals: favoriteMeals,
+      );
       activePageTitle = 'Your Favourites';
     }
 
